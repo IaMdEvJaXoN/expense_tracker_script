@@ -91,7 +91,7 @@ function runEndOfWeekAutomation() {
     var amountSaved = trackerSheet.getRange("B4").getValue();
 
     // D. SEND SUCCESS EMAIL
-    var subject = "📊 Weekly Expense Summary Report";
+    var subject = "Weekly Expense Summary Report";
     var body = "Hello IaMdEvJaXoN,\n\nHere is your weekly financial summary:\n\n" +
                "• Personal Total Spent: KES " + totalPersonalSpent.toFixed(2) + "\n" +
                "• Weekly Target Spend: KES " + Number(targetSpend).toFixed(2) + "\n" +
@@ -109,7 +109,7 @@ function runEndOfWeekAutomation() {
 
   } catch (error) {
     // FATAL ERROR CATCH: Notify the admin immediately
-    var errorSubject = "⚠️ SYSTEM FAILURE: Weekly Expense Automation";
+    var errorSubject = "SYSTEM FAILURE: Weekly Expense Automation";
     var errorBody = "Hello IaMdEvJaXoN,\n\nYour automated weekly expense script encountered a fatal error and halted execution.\n\n" +
                     "Error Message: " + error.message + "\n\n" +
                     "Stack Trace:\n" + error.stack + "\n\n" +
@@ -140,7 +140,7 @@ function processDailyReimbursement() {
       trackerRange.setValue(newExpenditure);
       reimbursedRange.clearContent();
 
-      var subject = "✅ Reimbursement Processed: Ledger Updated";
+      var subject = "Reimbursement Processed: Ledger Updated";
       var body = "Hello IaMdEvJaXoN,\n\n" +
                  "A reimbursement has been successfully processed and applied to your Financial Tracker.\n\n" +
                  "• Old Household Expenditure: KES " + oldExpenditure.toFixed(2) + "\n" +
@@ -152,28 +152,26 @@ function processDailyReimbursement() {
       MailApp.sendEmail(recipientEmail, subject, body);
     }
   } catch (error) {
-    var errorSubject = "⚠️ SYSTEM FAILURE: Daily Reimbursement Check";
+    var errorSubject = "SYSTEM FAILURE: Daily Reimbursement Check";
     var errorBody = "Hello IaMdEvJaXoN,\n\nThe daily reimbursement script failed.\n\nError: " + error.message + "\n\nStack: " + error.stack;
     MailApp.sendEmail(recipientEmail, errorSubject, errorBody);
   }
 }
 
-// ===========================================================================
 // 3. DAILY EXPENSE REMINDER AUTOMATION (Runs Every Day at 7:00 PM)
-// ===========================================================================
 function sendDailyReminder() {
   var recipientEmail = Session.getActiveUser().getEmail();
   
   try {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var subject = "📌 Daily Reminder: Log Your Expenses";
+    var subject = "Daily Reminder: Log Your Expenses";
     var body = "Hello IaMdEvJaXoN,\n\n" +
                "Don't forget to log your personal and household expenses for today.\n\n" +
                "Click here to update your sheets: " + ss.getUrl();
 
     MailApp.sendEmail(recipientEmail, subject, body);
   } catch (error) {
-    var errorSubject = "⚠️ SYSTEM FAILURE: Daily Reminder";
+    var errorSubject = "SYSTEM FAILURE: Daily Reminder";
     var errorBody = "Hello IaMdEvJaXoN,\n\nThe daily reminder script failed to send.\n\nError: " + error.message;
     MailApp.sendEmail(recipientEmail, errorSubject, errorBody);
   }
